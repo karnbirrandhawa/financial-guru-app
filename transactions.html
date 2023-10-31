@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <meta name='robots' content='noindex,noarchive,nofollow'>
+    <title>Transactions</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link href="main.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+    <header>
+        <h1> Financial Guru </h1>
+    </header>
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="transactions.html">Transactions</a>
+        <a href="accounts.html">Accounts</a>
+        <a href="categories.html">Categories</a>
+        <a href="household-members.html">Household Members</a>
+    </nav>
+    <main>
+        <section>
+            <h2>Transactions</h2>
+            <article>
+                <p>Here you can view and add transactions. </p>
+                    <fieldset>
+                        <legend>View Transactions</legend>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Transaction ID</th>
+                                    <th>Date</th>
+                                    <th>Amount</th>
+                                    <th>Description</th>
+                                    <th>Account</th>
+                                    <th>Category</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1</td>
+                                    <td>2023-07-11</td>
+                                    <td>-27.41</td>
+                                    <td>Piggly Wiggly</td>
+                                    <td>Emergency Savings</td>
+                                    <td>Entertainment</td>
+                                </tr>
+                                <tr>
+                                    <td>1</td>
+                                    <td>2023-07-11</td>
+                                    <td>-27.41</td>
+                                    <td>Piggly Wiggly</td>
+                                    <td>Emergency Savings</td>
+                                    <td>Entertainment</td>
+                                </tr>
+                                <tr>
+                                    <td>1</td>
+                                    <td>2023-07-11</td>
+                                    <td>-27.41</td>
+                                    <td>Piggly Wiggly</td>
+                                    <td>Emergency Savings</td>
+                                    <td>Entertainment</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </fieldset>
+                    <form action="/order-submitted" method="POST">
+                        <fieldset>
+                            <legend>Add Transactions</legend>
+                            <label for="date" class="required">Date:</label>
+                            <input 
+                            type="date" 
+                                name="date" id="date" 
+                                required 
+                                autofocus />
+    
+                            <label for="amount" class="required">Amount:</label>
+                            <input 
+                            type="number" 
+                                name="amount" id="amount" 
+                                step="any"
+                                size="5" maxlength="20" 
+                                required 
+                                placeholder="-1.06"  />
+    
+                            <label for="description" class="required">Description</label>
+                            <input 
+                            type="text" 
+                                name="description" id="description" 
+                                size="30" maxlength="250" 
+                                placeholder="Scout's Coffee" />
+
+                            <label for="account">Account:</label>
+                            <select name="account" id="account">
+                                <option value="Null"></option>
+                                <option value="emergency savings">Emergency Savings</option>
+                                <option value="personal checking">Personal Checking</option>
+                            </select>
+                            <label for="category">Category:</label>
+                            <select name="category" id="category">
+                                <option value="Null"></option>
+                                <option value="entertainment">Entertainment</option>
+                                <option value="groceries">Groceries</option>
+                            </select>
+                        </fieldset>
+                    <fieldset> 
+                        <button type="submit" 
+                        name="submit" id="submit" 
+                        value="Submit">Submit</button>
+                    </fieldset>
+                </form>
+            </article>
+        </section>
+    </main>
+    <footer>
+        &copy; Team Financial Gurus
+    </footer>    
+</body>
+</html>
