@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <meta name='robots' content='noindex,noarchive,nofollow'>
+    <title>Transactions</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link href="main.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+    <header>
+        <h1> Financial Guru </h1>
+    </header>
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="transactions.html">Transactions</a>
+        <a href="accounts.html">Accounts</a>
+        <a href="categories.html">Categories</a>
+        <a href="household-members.html">Household Members</a>
+    </nav>
+    <main>
+        <section>
+            <h2>Household Members</h2>
+            <article>
+                <p>Here you can view, add, and update information for household members. </p>
+                <fieldset>
+                    <legend>View Household Members</legend>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Household Member ID</th>
+                                <th>Name</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td>Billy Joe</td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td>Mary Jane</td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td>Diana Smith</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </fieldset>
+                <form action="/order-submitted" method="POST">
+                    <fieldset>
+                        <legend>Create New Household Member</legend>
+                        <label for="name" class="required">Name</label>
+                        <input 
+                        type="text" 
+                            name="description" id="description" 
+                            size="30" maxlength="250" 
+                            placeholder="FirstName LastName" />
+                    </fieldset>
+                <fieldset> 
+                    <button type="submit" 
+                    name="submit" id="submit" 
+                    value="Submit">Submit</button>
+                </fieldset>
+                </form>
+                <form action="/order-submitted" method="POST">
+                    <fieldset>
+                        <legend>Update Existing Household Member</legend>
+                        <label for="account">Member:</label>
+                            <select name="account" id="account">
+                                <option value="Null"></option>
+                                <option value="emergency savings">Billy Joe</option>
+                                <option value="personal checking">Mary Jane</option>
+                                <option value="personal checking">Diana Smith</option>
+                            </select>
+                        <label for="firstname" class="required">Update First Name</label>
+                        <input 
+                        type="text" 
+                            name="description" id="description" 
+                            size="30" maxlength="250" 
+                            placeholder="FirstName" />
+                        <label for="firstname" class="required">Update Last Name</label>
+                        <input 
+                        type="text" 
+                            name="description" id="description" 
+                            size="30" maxlength="250" 
+                            placeholder="LastName" />
+                    </fieldset>
+                <fieldset> 
+                    <button type="submit" 
+                    name="submit" id="submit" 
+                    value="Submit">Update</button>
+                </fieldset>
+                </form>
+            </article>
+        </section>
+    </main>
+    <footer>
+        &copy; Team Financial Gurus
+    </footer>    
+</body>
+</html>
