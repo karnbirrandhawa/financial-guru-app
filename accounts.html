@@ -43,7 +43,30 @@
                                     <td>6985649844</td>
                                 </tr>
                             </tbody>
-                        </table>
+                        </table>                    
+                    </fieldset>
+                    <form action="/order-submitted" method="POST">
+                        <fieldset>
+                            <legend>Add Accounts</legend>
+                            <label for="name" class="required">Account Name:</label>
+                            <input 
+                            type="text" 
+                                name="name" id="name" 
+                                size="30" maxlength="100" 
+                                required 
+                                placeholder="Jameela's Checking"  />
+    
+                            <label for="number">Description:</label>
+                            <input 
+                            type="text" 
+                                name="number" id="number" 
+                                size="30" maxlength="30" 
+                                placeholder="00000000000" />
+                        </fieldset>
+                    <fieldset> 
+                        <button type="submit" 
+                        name="submit" id="submit" 
+                        value="Submit">Submit</button>
                     </fieldset>
                 </form>
             </article>
