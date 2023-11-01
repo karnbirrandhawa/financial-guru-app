@@ -23,7 +23,7 @@
         <section>
             <h2>Accounts</h2>
             <article>
-                <p>Here you can view accounts. </p>
+                <p>Here you can view, add, or delete accounts. </p>
                     <fieldset>
                         <legend>View Accounts</legend>
                         <table>
@@ -45,28 +45,40 @@
                             </tbody>
                         </table>                    
                     </fieldset>
-                    <form action="/order-submitted" method="POST">
-                        <fieldset>
-                            <legend>Add Accounts</legend>
-                            <label for="name" class="required">Account Name:</label>
-                            <input 
-                            type="text" 
-                                name="name" id="name" 
-                                size="30" maxlength="100" 
-                                required 
-                                placeholder="Jameela's Checking"  />
-    
-                            <label for="number">Description:</label>
-                            <input 
-                            type="text" 
-                                name="number" id="number" 
-                                size="30" maxlength="30" 
-                                placeholder="00000000000" />
-                        </fieldset>
-                    <fieldset> 
-                        <button type="submit" 
-                        name="submit" id="submit" 
-                        value="Submit">Submit</button>
+                <form action="/order-submitted" method="POST">
+                    <fieldset>
+                        <legend>Add Account</legend>
+                        <label for="name" class="required">Account Name:</label>
+                        <input 
+                        type="text" 
+                            name="name" id="name" 
+                            size="30" maxlength="100" 
+                            required 
+                            placeholder="Jameela's Checking"  />
+
+                        <label for="number">Description:</label>
+                        <input 
+                        type="text" 
+                            name="number" id="number" 
+                            size="30" maxlength="30" 
+                            placeholder="00000000000" />
+                    <button type="submit" 
+                    name="add" id="add" 
+                    value="Add">Add</button>
+                    </fieldset>
+                </form>
+                <form action="/order-submitted" method="POST">
+                    <fieldset>
+                        <legend>Delete Account</legend>
+                        <label for="account">Account:</label>
+                            <select name="account" id="account">
+                                <option value="Null"></option>
+                                <option value="emergency savings">Emergency Savings</option>
+                                <option value="personal checking">Personal Checking</option>
+                            </select>
+                    <button type="submit" 
+                    name="delete" id="delete" 
+                    value="Delete">Delete</button>
                     </fieldset>
                 </form>
             </article>
