@@ -30,16 +30,16 @@ CREATE TABLE Transactions (
     description VARCHAR(255) NOT NULL, 
     account_id INT(11) NOT NULL, 
     category_id INT(11) NOT NULL,
-    FOREIGN KEY (account_id) REFERENCES Accounts(account_id),
-    FOREIGN KEY (category_id) REFERENCES Budget_categories(category_id)
+    FOREIGN KEY (account_id) REFERENCES Accounts(account_id) ON DELETE CASCADE,
+    FOREIGN KEY (category_id) REFERENCES Budget_categories(category_id) ON DELETE CASCADE
 );
 
 CREATE TABLE Household_members_accounts (
 	household_members_accounts INT(11) AUTO_INCREMENT PRIMARY KEY,
     account_id INT(11) NOT NULL,
     member_id INT(11) NOT NULL,
-    FOREIGN KEY (account_id) REFERENCES Accounts(account_id),
-    FOREIGN KEY (member_id) REFERENCES Household_members(member_id)
+    FOREIGN KEY (account_id) REFERENCES Accounts(account_id) ON DELETE RESTRICT,
+    FOREIGN KEY (member_id) REFERENCES Household_members(member_id) ON DELETE RESTRICT
 );
 
 
