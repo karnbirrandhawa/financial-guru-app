@@ -11,7 +11,9 @@ FROM Transactions
 
  -- add transaction in transactions.html
 INSERT INTO Transactions (date, amount, description, account_id, category_id)
-    VALUES (:date_input, :amount_input, :description_input, :account_id_input, :category_id_input)
+    VALUES (:date_input, :amount_input, :description_input,
+            :account_id_input_from_dropdown_input, :category_id_input_from_dropdown_input
+            )
 ;
 
  -- get account_id to populate dropdown in transactions.html
@@ -45,7 +47,7 @@ SELECT Accounts.account_id, account_name, SUM(Transactions.amount) AS account_ba
  DELETE FROM Accounts
     WHERE account_id = (SELECT account_id
                             FROM Accounts
-                            WHERE account_name = :account_name_input)
+                            WHERE account_name = :account_name_input_from_dropdown)
 ;
 
  -- get accounts to populate dropdown in accounts.html
@@ -78,20 +80,20 @@ INSERT INTO Household_members (member_name)
 ;
 
  -- get household members to populate dropdown in household-members.html
-SELECT member_name
+SELECT member_id, member_name
     FROM Household_members
     ORDER BY member_id ASC
 ;
 
- -- delete from household members
+ -- update from household members
 UPDATE Household_members
-SET member_name = :member_name_update 
-    WHERE member_id = :member_id_update
+SET member_name = :member_name_update
+    WHERE member_id = :member_id_update_from_dropdown_input
 ;
 
  -- ----------- HOUSEHOLD_MEMBERS_ACCOUNTS INTERSECTION TABLE QUERIES (M:M RELATIONSHIP) -------------- --
 
- -- get household members accounts intesection table to display 
+ -- get household members accounts intersection table to display
 SELECT * FROM Household_members_accounts
 ;
 
