@@ -23,7 +23,7 @@
         <section>
             <h2>Household Members</h2>
             <article>
-                <p>Here you can view, add, and update information for household members. </p>
+                <p>Here you can view, add, and update information for household members, as well as their accounts. </p>
                 <fieldset>
                     <legend>View Household Members</legend>
                     <table>
@@ -75,23 +75,42 @@
                                 <option value="personal checking">Mary Jane</option>
                                 <option value="personal checking">Diana Smith</option>
                             </select>
-                        <label for="firstname" class="required">Update First Name</label>
+                        <label for="firstname" class="required">Update First & Last Name</label>
                         <input 
                         type="text" 
                             name="description" id="description" 
                             size="30" maxlength="250" 
-                            placeholder="FirstName" />
-                        <label for="firstname" class="required">Update Last Name</label>
-                        <input 
-                        type="text" 
-                            name="description" id="description" 
-                            size="30" maxlength="250" 
-                            placeholder="LastName" />
+                            placeholder="FirstName LastName" />
                     </fieldset>
                 <fieldset> 
                     <button type="submit" 
                     name="submit" id="submit" 
                     value="Submit">Update</button>
+                </fieldset>
+                <fieldset>
+                    <legend>View Household Members Accounts</legend>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Household Member ID</th>
+                                <th>Account ID</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td>1</td>
+                            </tr>
+                            <tr>
+                                <td>1</td>
+                                <td>2</td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td>1</td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </fieldset>
                 </form>
             </article>
