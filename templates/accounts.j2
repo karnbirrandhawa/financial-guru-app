@@ -1,0 +1,106 @@
+<html>
+<!-- Adapted from CS340 edit_people.j2 -->
+<head>
+	<meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <meta name='robots' content='noindex,noarchive,nofollow'>
+	<title>Accounts</title>
+	<meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link href="main.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+<header>
+	<h1> Financial Guru </h1>
+</header>
+<nav>
+	<a href="index.html">Home</a>
+	<a href="transactions.html">Transactions</a>
+	<a href="accounts.html">Accounts</a>
+	<a href="categories.html">Categories</a>
+	<a href="household-members.html">Household Members</a>
+</nav>
+<main>
+<section>
+	<h2>Accounts</h2>
+	<article>
+		<p>Here you can view, add, or delete accounts. </p>
+			<fieldset>
+			<legend>View Accounts</legend>
+			<table>
+			<!-- Access data tuple passed from app.py --> 
+			{% if data %}
+				<thead>
+					<tr>
+						<!-- Iterate through each key in the first entry to get the column name -->
+						{% for key in data[0].keys() %}
+						
+						<!-- Create a <th> tag with the key inside of it, this will be our header row -->
+						<th scope="col" data-field="{{ key }}" data-filter-control="input">{{ key }}</th>
+					
+						<!-- End of this for loop -->
+						{% endfor %} 
+					</tr>
+
+				<tbody>
+					<!-- Now, iterate through every item in data -->{% for item in data %}
+					<tr>
+						<!-- Then iterate through every key in the current item dictionary -->
+						{% for key in item.keys() %}
+
+						<!-- Create a <td> element with the value of that key in it -->
+						<td> {{item[key]}} </td> 
+						{% endfor %}
+
+					</tr> 
+					{% endfor %} 
+			{% endif %} 
+			</table>   
+		<p>&nbsp;</p>
+		</div>	<!-- browse -->
+	</fieldset>
+	<form action="/add_account" method="POST">
+		<fieldset>
+			<legend>Add Account</legend>
+			<label for="name" class="required">Account Name:</label>
+			<input 
+			type="text" 
+				name="name" id="name" 
+				size="30" maxlength="100" 
+				required 
+				placeholder="Jameela's Checking"  />
+
+			<label for="number">Description:</label>
+			<input 
+			type="text" 
+				name="number" id="number" 
+				size="30" maxlength="30" 
+				placeholder="00000000000" />
+		<button type="submit" 
+		name="add" id="add" 
+		value="Add">Add</button>
+		</fieldset>
+	</form>
+	<form action="/delete_account" method="POST">
+		<fieldset>
+			<legend>Delete Account</legend>
+			<label for="account">Account:</label>
+				<select name="account" id="account">
+					<option value="Null"></option>
+					<option value="emergency savings">Emergency Savings</option>
+					<option value="personal checking">Personal Checking</option>
+				</select>
+		<button type="submit" 
+		name="delete" id="delete" 
+		value="Delete">Delete</button>
+		</fieldset>
+	</form>
+</article>
+</section>
+</main>
+<footer>
+&copy; Team Financial Gurus
+</footer>    
+
+</body>
+</html>
