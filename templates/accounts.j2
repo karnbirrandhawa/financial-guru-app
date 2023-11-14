@@ -61,7 +61,7 @@
 	</fieldset>
 
 	<div id="insert">
-	<form action="/add_account" method="POST">
+	<form id="insertAccount" action="/accounts" method="POST">
 	<fieldset>
 		<legend>Add Account</legend>
 		<label for="name" class="required">Account Name:</label>
@@ -72,15 +72,13 @@
 			required 
 			placeholder="Jameela's Checking"  />
 
-		<label for="number">Description:</label>
+		<label for="number">Account Number:</label>
 		<input 
 		type="text" 
 			name="number" id="number" 
 			size="30" maxlength="30" 
 			placeholder="00000000000" />
-	<button type="submit" 
-	name="add" id="add" 
-	value="Add">Add</button>
+	<button type="submit" name="Add_Account" id="Add_Account" value="Add Account">Add Account</button>
 	</fieldset>
 	</form>
 	</div>  <!-- insert -->

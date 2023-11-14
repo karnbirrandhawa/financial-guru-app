@@ -36,20 +36,47 @@ def home():
 @app.route("/accounts", methods=["POST", "GET"])
 def accounts():
 
-    # Grab bsg_accounts data so we send it to our template to display
+    # Grab accounts data so we send it to our template to display
     if request.method == "GET":
 
-        query = "SELECT Accounts.account_id AS id, account_name AS 'Account Name', \
-                    account_number AS 'Account Number', \
-                    SUM(Transactions.amount) AS 'Account Balance' \
-                    FROM Accounts \
-                    INNER JOIN Transactions ON Accounts.account_id=Transactions.account_id \
-                    GROUP BY Accounts.account_id"
+        query = "SELECT account_id AS id, \
+                        account_name AS 'Account Name', \
+                        account_number AS 'Account Number' \
+                    FROM Accounts"
+
         cur = mysql.connection.cursor()
         cur.execute(query)
         data = cur.fetchall()
+        print(data)
 
         return render_template("accounts.j2", data=data)
+
+    # insert a person into the Accounts entity
+    if request.method == "POST":
+        # fire off if user presses the Add Person button
+        if request.form.get("Add_Account"):
+            # grab user form inputs
+            account_name_input = request.form["name"]
+            account_number_input = request.form["number"]
+
+            # account for null age AND homeworld
+            if account_number_input == "":
+                # mySQL query to insert a new person into bsg_accounts with our form inputs
+                query = "INSERT INTO Accounts (account_name) VALUES (%s)"
+                cur = mysql.connection.cursor()
+                cur.execute(query, (account_name_input))
+                mysql.connection.commit()
+
+            # no null inputs
+            else:
+                query = "INSERT INTO Accounts (account_name, account_number) \
+                            VALUES (%s, %s)"
+                cur = mysql.connection.cursor()
+                cur.execute(query, (account_name_input, account_number_input))
+                mysql.connection.commit()
+
+            # redirect back to accounts page
+            return redirect("/accounts")
 
 
 # Listener
