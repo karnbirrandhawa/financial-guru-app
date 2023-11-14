@@ -23,9 +23,9 @@
 <main>
 <section>
 	<h2>Accounts</h2>
-	<article>
 		<p>Here you can view, add, or delete accounts. </p>
 			<fieldset>
+			<div id="browse">
 			<legend>View Accounts</legend>
 			<table>
 			<!-- Access data tuple passed from app.py --> 
@@ -59,28 +59,33 @@
 		<p>&nbsp;</p>
 		</div>	<!-- browse -->
 	</fieldset>
-	<form action="/add_account" method="POST">
-		<fieldset>
-			<legend>Add Account</legend>
-			<label for="name" class="required">Account Name:</label>
-			<input 
-			type="text" 
-				name="name" id="name" 
-				size="30" maxlength="100" 
-				required 
-				placeholder="Jameela's Checking"  />
 
-			<label for="number">Description:</label>
-			<input 
-			type="text" 
-				name="number" id="number" 
-				size="30" maxlength="30" 
-				placeholder="00000000000" />
-		<button type="submit" 
-		name="add" id="add" 
-		value="Add">Add</button>
-		</fieldset>
+	<div id="insert">
+	<form action="/add_account" method="POST">
+	<fieldset>
+		<legend>Add Account</legend>
+		<label for="name" class="required">Account Name:</label>
+		<input 
+		type="text" 
+			name="name" id="name" 
+			size="30" maxlength="100" 
+			required 
+			placeholder="Jameela's Checking"  />
+
+		<label for="number">Description:</label>
+		<input 
+		type="text" 
+			name="number" id="number" 
+			size="30" maxlength="30" 
+			placeholder="00000000000" />
+	<button type="submit" 
+	name="add" id="add" 
+	value="Add">Add</button>
+	</fieldset>
 	</form>
+	</div>  <!-- insert -->
+
+	<div id="delete">
 	<form action="/delete_account" method="POST">
 		<fieldset>
 			<legend>Delete Account</legend>
@@ -95,7 +100,7 @@
 		value="Delete">Delete</button>
 		</fieldset>
 	</form>
-</article>
+	</div>
 </section>
 </main>
 <footer>
