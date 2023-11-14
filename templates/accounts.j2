@@ -15,10 +15,10 @@
 </header>
 <nav>
 	<a href="index.html">Home</a>
-	<a href="transactions.html">Transactions</a>
-	<a href="accounts.html">Accounts</a>
-	<a href="categories.html">Categories</a>
-	<a href="household-members.html">Household Members</a>
+	<a href="transactions">Transactions</a>
+	<a href="accounts">Accounts</a>
+	<a href="categories">Categories</a>
+	<a href="household-members">Household Members</a>
 </nav>
 <main>
 <section>
@@ -84,18 +84,20 @@
 	</div>  <!-- insert -->
 
 	<div id="delete">
-	<form action="/delete_account" method="POST">
+	<form id="deleteAccount" action="/delete_account" method="POST">
 		<fieldset>
 			<legend>Delete Account</legend>
 			<label for="account">Account:</label>
 				<select name="account" id="account">
 					<option value="Null"></option>
-					<option value="emergency savings">Emergency Savings</option>
-					<option value="personal checking">Personal Checking</option>
+					{% if data %}				
+						{% for item in data %}
+							<option value={{ item['id'] }}>{{ item['Account Name'] }}</option>
+							<!-- Then iterate through every key in the current item dictionary -->
+						{% endfor %} 
+					{% endif %} 
 				</select>
-		<button type="submit" 
-		name="delete" id="delete" 
-		value="Delete">Delete</button>
+		<button type="submit" name="Delete_Account" id="Delete_Account" value="Delete Account">Delete Account</button>
 		</fieldset>
 	</form>
 	</div>

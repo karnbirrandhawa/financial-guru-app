@@ -25,8 +25,8 @@ app.config["MYSQL_CURSORCLASS"] = config.MYSQL_CURSORCLASS
 
 mysql = MySQL(app)
 
-# Routes
 
+# Routes
 @app.route("/")
 def home():
     return redirect("/accounts")
@@ -47,21 +47,19 @@ def accounts():
         cur = mysql.connection.cursor()
         cur.execute(query)
         data = cur.fetchall()
-        print(data)
 
         return render_template("accounts.j2", data=data)
 
-    # insert a person into the Accounts entity
+    # insert an account into the Accounts entity
     if request.method == "POST":
-        # fire off if user presses the Add Person button
+        # fire off if user presses the Add Account button
         if request.form.get("Add_Account"):
             # grab user form inputs
             account_name_input = request.form["name"]
             account_number_input = request.form["number"]
 
-            # account for null age AND homeworld
+            # account for null account number
             if account_number_input == "":
-                # mySQL query to insert a new person into bsg_accounts with our form inputs
                 query = "INSERT INTO Accounts (account_name) VALUES (%s)"
                 cur = mysql.connection.cursor()
                 cur.execute(query, (account_name_input))
@@ -77,6 +75,19 @@ def accounts():
 
             # redirect back to accounts page
             return redirect("/accounts")
+
+
+@app.route("/delete_account", methods=["POST"])
+def delete_account():
+
+    if request.form.get("Delete_Account"):
+        account_id_input = request.form["account"]
+        query = "DELETE FROM Accounts WHERE account_id = %s;"
+        cur = mysql.connection.cursor()
+        cur.execute(query, (account_id_input))
+        mysql.connection.commit()
+
+    return redirect("/accounts")
 
 
 # Listener
