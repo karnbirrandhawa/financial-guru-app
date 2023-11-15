@@ -1,27 +1,26 @@
-
 from flask import Flask, render_template, json, redirect
 from flask_mysqldb import MySQL
 from flask import request
 import os
-import config
+# import config
 
 
 app = Flask(__name__)
 
 # database connection
 # Template:
-# app.config["MYSQL_HOST"] = "classmysql.engr.oregonstate.edu"
-# app.config["MYSQL_USER"] = "cs340_OSUusername"
-# app.config["MYSQL_PASSWORD"] = "XXXX" | last 4 digits of OSU id
-# app.config["MYSQL_DB"] = "cs340_OSUusername"
-# app.config["MYSQL_CURSORCLASS"] = "DictCursor"
+app.config["MYSQL_HOST"] = "classmysql.engr.oregonstate.edu"
+app.config["MYSQL_USER"] = "cs340_randhawk"
+app.config["MYSQL_PASSWORD"] = "1528" 
+app.config["MYSQL_DB"] = "cs340_randhawk"
+app.config["MYSQL_CURSORCLASS"] = "DictCursor"
 
-# database connection info
-app.config["MYSQL_HOST"] = config.MYSQL_HOST
-app.config["MYSQL_USER"] = config.MYSQL_USER
-app.config["MYSQL_PASSWORD"] = config.MYSQL_PASSWORD
-app.config["MYSQL_DB"] = config.MYSQL_DB
-app.config["MYSQL_CURSORCLASS"] = config.MYSQL_CURSORCLASS
+# # database connection info
+# app.config["MYSQL_HOST"] = config.MYSQL_HOST
+# app.config["MYSQL_USER"] = config.MYSQL_USER
+# app.config["MYSQL_PASSWORD"] = config.MYSQL_PASSWORD
+# app.config["MYSQL_DB"] = config.MYSQL_DB
+# app.config["MYSQL_CURSORCLASS"] = config.MYSQL_CURSORCLASS
 
 mysql = MySQL(app)
 
@@ -76,7 +75,6 @@ def accounts():
             # redirect back to accounts page
             return redirect("/accounts")
 
-
 @app.route("/delete_account", methods=["POST"])
 def delete_account():
 
@@ -89,8 +87,47 @@ def delete_account():
 
     return redirect("/accounts")
 
+# route for household-members page
+@app.route("/household-members", methods=["POST", "GET"])
+def members():
+
+    # Grab member data so we send it to our template to display
+    if request.method == "GET":
+
+        query = "SELECT member_id AS 'id', member_name AS 'Member Name' FROM Household_members"
+        cur = mysql.connection.cursor()
+        cur.execute(query)
+        data = cur.fetchall()
+
+        return render_template("household-members.j2", data=data)
+
+    # insert a member into the Household_members entity
+    # if request.method == "POST":
+    #     # fire off if user presses the Add Member button
+    #     if request.form.get("Add_Member"):
+    #         # grab user form inputs
+    #         member_name_input = request.form["name"]
+
+    #         # account for null member input
+    #         if member_name_input == "":
+    #             query = "INSERT INTO Household_members (member_name) VALUES (%s)"
+    #             cur = mysql.connection.cursor()
+    #             cur.execute(query, (member_name_input))
+    #             mysql.connection.commit()
+
+    #         # no null inputs
+    #         else:
+    #             query = "INSERT INTO Household_members (member_name) VALUES (%s)"
+    #             cur = mysql.connection.cursor()
+    #             cur.execute(query, (member_name_input))
+    #             mysql.connection.commit()
+
+    #         # redirect back to household-members page
+    #         return redirect("/household-members")
 
 # Listener
 # change the port number if deploying on the flip servers
+# app is displaying on http://flip2.engr.oregonstate.edu:50121 when on the VPN and using above credentials  
 if __name__ == "__main__":
-    app.run(port=3000, debug=True)
+    app.run(port=50121, debug=True)
+ 
