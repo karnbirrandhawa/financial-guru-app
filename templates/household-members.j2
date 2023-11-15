@@ -1,0 +1,104 @@
+<html>
+<!-- Adapted from CS340 edit_people.j2 -->
+<head>
+	<meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <meta name='robots' content='noindex,noarchive,nofollow'>
+	<title>Household Members</title>
+	<meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link href="main.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+<header>
+	<h1> Financial Guru </h1>
+</header>
+<nav>
+	<a href="index.html">Home</a>
+	<a href="transactions">Transactions</a>
+	<a href="accounts">Accounts</a>
+	<a href="categories">Categories</a>
+	<a href="household-members">Household Members</a>
+</nav>
+<main>
+<section>
+	<h2>Household Members</h2>
+		<p>Here you can view, add, and update information for household members, as well as their accounts. </p>
+			<fieldset>
+			<div id="browse">
+			<legend>View Household Members</legend>
+			<table>
+			<!-- Access data tuple passed from app.py --> 
+			{% if data %}
+				<thead>
+					<tr>
+						<!-- Iterate through each key in the first entry to get the column name -->
+						{% for key in data[0].keys() %}
+						
+						<!-- Create a <th> tag with the key inside of it, this will be our header row -->
+						<th scope="col" data-field="{{ key }}" data-filter-control="input">{{ key }}</th>
+					
+						<!-- End of this for loop -->
+						{% endfor %} 
+					</tr>
+
+				<tbody>
+					<!-- Now, iterate through every item in data -->{% for item in data %}
+					<tr>
+						<!-- Then iterate through every key in the current item dictionary -->
+						{% for key in item.keys() %}
+
+						<!-- Create a <td> element with the value of that key in it -->
+						<td> {{item[key]}} </td> 
+						{% endfor %}
+
+					</tr> 
+					{% endfor %} 
+			{% endif %} 
+			</table>   
+		<p>&nbsp;</p>
+		</div>	<!-- browse -->
+	</fieldset>
+
+	<div id="insert">
+	<form id="insertMember" action="/members" method="POST">
+	<fieldset>
+		<legend>Create New Household Member</legend>
+		<label for="name" class="required">Member Name:</label>
+		<input 
+		type="text" 
+			name="name" id="name" 
+			size="30" maxlength="250" 
+			required 
+			placeholder="Firstname Lastname"  />
+	<button type="submit" name="Add_Member" id="Add_Member" value="Add Member">Add Member</button>
+	</fieldset>
+	</form>
+	</div>  <!-- insert -->
+
+	<div id="update">
+	<form id="updateMember" action="/update_member" method="POST">
+		<fieldset>
+			<legend>Update Member</legend>
+			<label for="member">Member:</label>
+				<select name="member" id="member">
+					<option value="Null"></option>
+					{% if data %}				
+						{% for item in data %}
+							<option value={{ item['id'] }}>{{ item['Member Name'] }}</option>
+							<!-- Then iterate through every key in the current item dictionary -->
+						{% endfor %} 
+					{% endif %} 
+				</select>
+		<button type="submit" name="Update_Member" id="Update_Member" value="Update Member">Update Member</button>
+		</fieldset>
+	</form>
+	</div>
+</section>
+</main>
+<footer>
+&copy; Team Financial Gurus
+</footer>    
+
+</body>
+</html>
