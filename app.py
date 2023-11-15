@@ -113,21 +113,21 @@ def members():
     #     if request.form.get("Add_Member"):
     #         # grab user form inputs
     #         member_name_input = request.form["name"]
-
+    #
     #         # account for null member input
     #         if member_name_input == "":
     #             query = "INSERT INTO Household_members (member_name) VALUES (%s)"
     #             cur = mysql.connection.cursor()
-    #             cur.execute(query, (member_name_input))
+    #             cur.execute(query, (member_name_input,))
     #             mysql.connection.commit()
-
+    #
     #         # no null inputs
     #         else:
     #             query = "INSERT INTO Household_members (member_name) VALUES (%s)"
     #             cur = mysql.connection.cursor()
-    #             cur.execute(query, (member_name_input))
+    #             cur.execute(query, (member_name_input,))
     #             mysql.connection.commit()
-
+    #
     #         # redirect back to household-members page
     #         return redirect("/household-members")
 
