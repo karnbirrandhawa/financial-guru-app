@@ -2,25 +2,25 @@ from flask import Flask, render_template, json, redirect
 from flask_mysqldb import MySQL
 from flask import request
 import os
-import config
+# import config
 
 
 app = Flask(__name__)
 
 # database connection
 # Template:
-# app.config["MYSQL_HOST"] = "classmysql.engr.oregonstate.edu"
-# app.config["MYSQL_USER"] = "cs340_OSUusername"
-# app.config["MYSQL_PASSWORD"] = "XXXX" | last 4 digits of OSU id
-# app.config["MYSQL_DB"] = "cs340_OSUusername"
-# app.config["MYSQL_CURSORCLASS"] = "DictCursor"
+app.config["MYSQL_HOST"] = "classmysql.engr.oregonstate.edu"
+app.config["MYSQL_USER"] = "cs340_randhawk"
+app.config["MYSQL_PASSWORD"] = "1528" 
+app.config["MYSQL_DB"] = "cs340_randhawk"
+app.config["MYSQL_CURSORCLASS"] = "DictCursor"
 
-# database connection info
-app.config["MYSQL_HOST"] = config.MYSQL_HOST
-app.config["MYSQL_USER"] = config.MYSQL_USER
-app.config["MYSQL_PASSWORD"] = config.MYSQL_PASSWORD
-app.config["MYSQL_DB"] = config.MYSQL_DB
-app.config["MYSQL_CURSORCLASS"] = config.MYSQL_CURSORCLASS
+# # database connection info
+# app.config["MYSQL_HOST"] = config.MYSQL_HOST
+# app.config["MYSQL_USER"] = config.MYSQL_USER
+# app.config["MYSQL_PASSWORD"] = config.MYSQL_PASSWORD
+# app.config["MYSQL_DB"] = config.MYSQL_DB
+# app.config["MYSQL_CURSORCLASS"] = config.MYSQL_CURSORCLASS
 
 mysql = MySQL(app)
 
@@ -92,4 +92,4 @@ def delete_account():
 # Listener
 # change the port number if deploying on the flip servers
 if __name__ == "__main__":
-    app.run(port=3000, debug=True)
+    app.run(port=8126, debug=True)
