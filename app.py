@@ -62,7 +62,7 @@ def accounts():
             if account_number_input == "":
                 query = "INSERT INTO Accounts (account_name) VALUES (%s)"
                 cur = mysql.connection.cursor()
-                cur.execute(query, (account_name_input))
+                cur.execute(query, (account_name_input,))
                 mysql.connection.commit()
 
             # no null inputs
@@ -84,7 +84,7 @@ def delete_account():
         account_id_input = request.form["account"]
         query = "DELETE FROM Accounts WHERE account_id = %s;"
         cur = mysql.connection.cursor()
-        cur.execute(query, (account_id_input))
+        cur.execute(query, (account_id_input,))
         mysql.connection.commit()
 
     return redirect("/accounts")
