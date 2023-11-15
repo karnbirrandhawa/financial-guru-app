@@ -1,18 +1,22 @@
 from flask import Flask, render_template, json, redirect
 from flask_mysqldb import MySQL
 from flask import request
-import os
-# import config
 
 
 app = Flask(__name__)
 
 # database connection
 # Template:
+# app.config["MYSQL_HOST"] = "classmysql.engr.oregonstate.edu"
+# app.config["MYSQL_USER"] = "cs340_randhawk"
+# app.config["MYSQL_PASSWORD"] = "1528"
+# app.config["MYSQL_DB"] = "cs340_randhawk"
+# app.config["MYSQL_CURSORCLASS"] = "DictCursor"
+
 app.config["MYSQL_HOST"] = "classmysql.engr.oregonstate.edu"
-app.config["MYSQL_USER"] = "cs340_randhawk"
-app.config["MYSQL_PASSWORD"] = "1528" 
-app.config["MYSQL_DB"] = "cs340_randhawk"
+app.config["MYSQL_USER"] = "cs340_allmanlj"
+app.config["MYSQL_PASSWORD"] = "gNVb2MTHnklD"
+app.config["MYSQL_DB"] = "cs340_allmanlj"
 app.config["MYSQL_CURSORCLASS"] = "DictCursor"
 
 # # database connection info
@@ -75,6 +79,7 @@ def accounts():
             # redirect back to accounts page
             return redirect("/accounts")
 
+
 @app.route("/delete_account", methods=["POST"])
 def delete_account():
 
@@ -86,6 +91,7 @@ def delete_account():
         mysql.connection.commit()
 
     return redirect("/accounts")
+
 
 # route for household-members page
 @app.route("/household-members", methods=["POST", "GET"])
