@@ -100,36 +100,40 @@ def members():
     # Grab member data so we send it to our template to display
     if request.method == "GET":
 
-        query = "SELECT member_id AS 'id', member_name AS 'Member Name' FROM Household_members"
+        query = "SELECT member_id AS 'id', \
+                        member_name AS 'Member Name' \
+                    FROM Household_members \
+                    ORDER BY member_id ASC"
+        
         cur = mysql.connection.cursor()
         cur.execute(query)
         data = cur.fetchall()
 
         return render_template("household-members.j2", data=data)
 
-    # insert a member into the Household_members entity
-    # if request.method == "POST":
-    #     # fire off if user presses the Add Member button
-    #     if request.form.get("Add_Member"):
-    #         # grab user form inputs
-    #         member_name_input = request.form["name"]
-    #
-    #         # account for null member input
-    #         if member_name_input == "":
-    #             query = "INSERT INTO Household_members (member_name) VALUES (%s)"
-    #             cur = mysql.connection.cursor()
-    #             cur.execute(query, (member_name_input,))
-    #             mysql.connection.commit()
-    #
-    #         # no null inputs
-    #         else:
-    #             query = "INSERT INTO Household_members (member_name) VALUES (%s)"
-    #             cur = mysql.connection.cursor()
-    #             cur.execute(query, (member_name_input,))
-    #             mysql.connection.commit()
-    #
-    #         # redirect back to household-members page
-    #         return redirect("/household-members")
+   #  insert a member into the Household_members entity
+    if request.method == "POST":
+        # fire off if user presses the Add Member button
+        if request.form.get("Add_Member"):
+            # grab user form inputs
+            member_name_input = request.form["name"]
+    
+            # account for null member input
+            if member_name_input == "":
+                query = "INSERT INTO Household_members (member_name) VALUES (%s)"
+                cur = mysql.connection.cursor()
+                cur.execute(query, (member_name_input,))
+                mysql.connection.commit()
+    
+            # no null inputs
+            else:
+                query = "INSERT INTO Household_members (member_name) VALUES (%s)"
+                cur = mysql.connection.cursor()
+                cur.execute(query, (member_name_input,))
+                mysql.connection.commit()
+    
+            # redirect back to household-members page
+            return redirect("/household-members")
 
 # Listener
 # change the port number if deploying on the flip servers
