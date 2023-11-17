@@ -135,6 +135,36 @@ def members():
             # redirect back to household-members page
             return redirect("/household-members")
 
+@app.route("/edit-household-members/<int:member_id>", methods=["POST", "GET"])
+def edit_household_members(member_id):
+
+    if request.method == "GET":
+        # mySQL query to grab the info of the member with our passed id
+        query = "SELECT * FROM Household_members WHERE member_id = %s" % (member_id)
+        cur = mysql.connection.cursor()
+        cur.execute(query)
+        data = cur.fetchall()
+
+        return render_template("edit-household-members.j2", data=data)
+
+    # meat and potatoes of our update functionality
+    if request.method == "POST":
+        # fire off if user clicks the 'Update Member' button
+        if request.form.get("Update_Member"):
+            # grab user form inputs
+            member_id = request.form["member_id"]
+            member_name = request.form["member_name"]
+
+            query = "UPDATE Household_members \
+                        SET member_name = %s \
+                        WHERE member_id = %s"
+            cur = mysql.connection.cursor()
+            cur.execute(query, (member_name, member_id))
+            mysql.connection.commit()
+
+            # redirect back to members page after we execute the update query
+            return redirect("/household-members")
+
 # Listener
 # change the port number if deploying on the flip servers
 # app is displaying on http://flip2.engr.oregonstate.edu:50121 when on the VPN and using above credentials  
