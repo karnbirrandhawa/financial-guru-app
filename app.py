@@ -147,7 +147,6 @@ def edit_household_members(member_id):
 
         return render_template("edit-household-members.j2", data=data)
 
-    # meat and potatoes of our update functionality
     if request.method == "POST":
         # fire off if user clicks the 'Update Member' button
         if request.form.get("Update_Member"):

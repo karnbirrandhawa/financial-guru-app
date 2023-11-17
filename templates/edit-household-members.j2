@@ -4,60 +4,19 @@
 	<meta charset='utf-8'>
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
     <meta name='robots' content='noindex,noarchive,nofollow'>
-	<title>Household Members</title>
+	<title>Edit Household Members</title>
 	<meta name='viewport' content='width=device-width, initial-scale=1'>
     <link href="main.css" rel="stylesheet" type="text/css" />
 </head>
 
 <body>
 <header>
-	<h1> Financial Guru </h1>
+	<h1> Edit Household Members </h1>
 </header>
-<nav>
-	<a href="index.html">Home</a>
-	<a href="transactions">Transactions</a>
-	<a href="accounts">Accounts</a>
-	<a href="categories">Categories</a>
-	<a href="household-members">Household Members</a>
-</nav>
 <main>
 <section>
 	<h2>Edit Household Member Form</h2>
 		<p>Here you can update information for a household member. </p>
-			<fieldset>
-			<div id="browse">
-			<legend>View Household Members</legend>
-			<table>
-			<!-- Access data tuple passed from app.py --> 
-			{% if data %}
-				<thead>
-					<tr>
-						<!-- Iterate through each key in the first entry to get the column name -->
-						{% for key in data[0].keys() %}
-						
-						<!-- Create a <th> tag with the key inside of it, this will be our header row -->
-						<th scope="col" data-field="{{ key }}" data-filter-control="input">{{ key }}</th>
-					
-						<!-- End of this for loop -->
-						{% endfor %} 
-					</tr>
-
-				<tbody>
-					<!-- Now, iterate through every item in data -->{% for item in data %}
-					<tr>
-						<!-- Then iterate through every key in the current item dictionary -->
-						{% for key in item.keys() %}
-
-						<!-- Create a <td> element with the value of that key in it -->
-						<td> {{item[key]}} </td> 
-						{% endfor %}
-
-					</tr> 
-					{% endfor %} 
-			{% endif %} 
-			</table>   
-		<p>&nbsp;</p>
-		</div>	<!-- browse -->
 	</fieldset>
 
 	<div id="edit">
@@ -67,10 +26,13 @@
             <!-- We can preset form inputs to match attributes currently stored for 'id' of person to be updated via value= and accessing our passed data tuple -->
             <!-- Create hidden form input to store the passed 'id' of the person we are editing so we can access it easily in our 'POST' method in our app.py -->
            
-            <input type="hidden" value="{{data[0].member_id}}" id="member_id" name="member_id">
-            
-            <label for="member_name">Edit name:</label>
-            <input type="text" class="form-control" id="member_name" name="member_name" pattern="[A-Za-z]+" placeholder="{{data[0].member_name}}" required>
+            <input type="hidden" value="{{data[0].member_id}}" class="form-control" id="memberID" name="memberID">
+			<div>ID: {{data[0].member_id}}</div>
+
+			<div>
+            <label for="name">Edit name:</label>
+			<input type="text" value="{{data[0].member_name}}" id="name" name="name" required>
+			</div>
 
 	<button type="submit" name="Update_Member" id="Update_Member" value="Update Member">Update Member</button>
 	</fieldset>
