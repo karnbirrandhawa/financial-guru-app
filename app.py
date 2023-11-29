@@ -164,6 +164,28 @@ def edit_household_members(member_id):
             # redirect back to members page after we execute the update query
             return redirect("/household-members")
 
+
+# route for transactions page
+@app.route("/transactions", methods=["POST", "GET"])
+def transactions():
+
+    # Grab transactions data so we send it to our template to display
+    if request.method == "GET":
+
+        # TODO: Make prettier
+        query = "SELECT transaction_id, date, amount, description, Accounts.account_name, Budget_categories.category_name \
+                    FROM Transactions \
+	                INNER JOIN Accounts ON Transactions.account_id=Accounts.account_id \
+                    INNER JOIN Budget_categories ON Transactions.category_id = Budget_categories.category_id \
+                    ORDER BY date DESC;"
+
+        cur = mysql.connection.cursor()
+        cur.execute(query)
+        data = cur.fetchall()
+
+        return render_template("transactions.j2", data=data)
+
+
 # Listener
 # change the port number if deploying on the flip servers
 # app is displaying on http://flip2.engr.oregonstate.edu:50121 when on the VPN and using above credentials  
