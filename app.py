@@ -198,6 +198,36 @@ def transactions():
 
         return render_template("transactions.j2", data=data, account_data=account_data, category_data=category_data)
 
+    # insert a transaction into the Transactions entity
+    if request.method == "POST":
+        # fire off if user presses the Add Transaction button
+        if request.form.get("Add_Transaction"):
+            # grab user form inputs
+            transaction_date_input = request.form["date"]
+            transaction_description_input = request.form["description"]
+            transaction_account_input = request.form["account"]
+            transaction_category_input = request.form["category"]
+            transaction_amount_input = request.form["amount"]
+
+            # account for null inputs
+            if transaction_account_input == "Null":
+                return redirect("/transactions")
+
+            elif transaction_category_input == "Null":
+                return redirect("/transactions")
+
+            # no null inputs
+            else:
+                query = "INSERT INTO Transactions (date, description, account_id, category_id, amount) \
+                             VALUES (%s, %s, %s, %s, %s);"
+                cur = mysql.connection.cursor()
+                cur.execute(query, (transaction_date_input, transaction_description_input, transaction_account_input,
+                                    transaction_category_input, transaction_amount_input))
+                mysql.connection.commit()
+
+            # redirect back to transactions page
+            return redirect("/transactions")
+
 
 # Listener
 # change the port number if deploying on the flip servers
