@@ -2,17 +2,19 @@
  -- ----------- TRANSACTIONS PAGE -------------- -- 
 
  -- get transactions to display on transactions.html
-SELECT date, amount, description, Accounts.account_name, Budget_categories.category_name 
-FROM Transactions
-	INNER JOIN Accounts ON Transactions.account_id=Accounts.account_id
+SELECT transaction_id AS ID, date AS Date, description AS Description,
+            Accounts.account_name AS 'Account Name', Budget_categories.category_name AS Category,
+            CONCAT('$ ', FORMAT(amount, 2)) AS Amount
+        FROM Transactions
+    INNER JOIN Accounts ON Transactions.account_id=Accounts.account_id
     INNER JOIN Budget_categories ON Transactions.category_id = Budget_categories.category_id
     ORDER BY date DESC
-;
+   ;
 
  -- add transaction in transactions.html
-INSERT INTO Transactions (date, amount, description, account_id, category_id)
-    VALUES (:date_input, :amount_input, :description_input,
-            :account_id_input_from_dropdown_input, :category_id_input_from_dropdown_input
+INSERT INTO Transactions (date, description, account_id, category_id, amount)
+    VALUES (:date_input, :description_input, :account_id_input_from_dropdown_input,
+            :category_id_input_from_dropdown_input, :amount_input
             )
 ;
 
@@ -32,10 +34,10 @@ SELECT category_id, category_name
  -- ----------- ACCOUNTS PAGE -------------- --
 
  -- get accounts to display on accounts.html
-SELECT Accounts.account_id, account_name, SUM(Transactions.amount) AS account_balance 
-	FROM Accounts
-	INNER JOIN Transactions ON Accounts.account_id=Transactions.account_id 
-    GROUP BY Accounts.account_id
+SELECT account_id AS id,
+        account_name AS 'Account Name',
+        account_number AS 'Account Number'
+    FROM Accounts
 ;
 
  -- add accounts 
@@ -45,9 +47,7 @@ SELECT Accounts.account_id, account_name, SUM(Transactions.amount) AS account_ba
 
  -- delete from accounts
  DELETE FROM Accounts
-    WHERE account_id = (SELECT account_id
-                            FROM Accounts
-                            WHERE account_name = :account_name_input_from_dropdown)
+    WHERE account_id = :account_input_from_dropdown)
 ;
 
  -- get accounts to populate dropdown in accounts.html
