@@ -171,29 +171,32 @@ def transactions():
 
     # Grab transactions data so we send it to our template to display
     if request.method == "GET":
-        query = "SELECT transaction_id AS ID, date AS Date, description AS Description, \
+        query1 = "SELECT transaction_id AS ID, date AS Date, description AS Description, \
                         Accounts.account_name AS 'Account Name', Budget_categories.category_name AS Category, \
                         CONCAT('$ ', FORMAT(amount, 2)) AS Amount \
                      FROM Transactions \
                  INNER JOIN Accounts ON Transactions.account_id=Accounts.account_id \
                  INNER JOIN Budget_categories ON Transactions.category_id = Budget_categories.category_id \
                  ORDER BY date DESC;"
-
         cur = mysql.connection.cursor()
-        cur.execute(query)
+        cur.execute(query1)
         data = cur.fetchall()
 
         query2 = "SELECT account_id, account_name \
-                 FROM Accounts \
-                 ORDER BY account_name;"
-
-        # query = "SELECT * FROM Accounts"
-
+                      FROM Accounts \
+                  ORDER BY account_name;"
         cur = mysql.connection.cursor()
         cur.execute(query2)
         account_data = cur.fetchall()
 
-        return render_template("transactions.j2", data=data, account_data=account_data)
+        query3 = "SELECT category_id, category_name \
+                      FROM Budget_categories \
+                  ORDER BY category_name;"
+        cur = mysql.connection.cursor()
+        cur.execute(query3)
+        category_data = cur.fetchall()
+
+        return render_template("transactions.j2", data=data, account_data=account_data, category_data=category_data)
 
 
 # Listener

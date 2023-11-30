@@ -89,6 +89,17 @@
 					{% endif %}
 				</select>
 
+		<label for="account">Category:</label>
+				<select name="category" id="category">
+					<option value="Null"></option>
+					{% if category_data %}
+						{% for item in category_data %}
+							<option value={{ item['category_id'] }}>{{ item['category_name'] }}</option>
+							<!-- Then iterate through every key in the current item dictionary -->
+						{% endfor %}
+					{% endif %}
+				</select>
+
 	<button type="submit" name="Add_Transaction" id="Add_Transaction" value="Add Transaction">Add Transaction</button>
 	</fieldset>
 	</form>
