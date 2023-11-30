@@ -79,26 +79,33 @@
 			placeholder="Piggly-Wiggley" />
 
 		<label for="account">Account:</label>
-				<select name="account" id="account">
-					<option value="Null"></option>
-					{% if account_data %}
-						{% for item in account_data %}
-							<option value={{ item['account_id'] }}>{{ item['account_name'] }}</option>
-							<!-- Then iterate through every key in the current item dictionary -->
-						{% endfor %}
-					{% endif %}
-				</select>
+            <select name="account" id="account">
+                <option value="Null"></option>
+                {% if account_data %}
+                    {% for item in account_data %}
+                        <option value={{ item['account_id'] }}>{{ item['account_name'] }}</option>
+                        <!-- Then iterate through every key in the current item dictionary -->
+                    {% endfor %}
+                {% endif %}
+            </select>
 
 		<label for="account">Category:</label>
-				<select name="category" id="category">
-					<option value="Null"></option>
-					{% if category_data %}
-						{% for item in category_data %}
-							<option value={{ item['category_id'] }}>{{ item['category_name'] }}</option>
-							<!-- Then iterate through every key in the current item dictionary -->
-						{% endfor %}
-					{% endif %}
-				</select>
+            <select name="category" id="category">
+                <option value="Null"></option>
+                {% if category_data %}
+                    {% for item in category_data %}
+                        <option value={{ item['category_id'] }}>{{ item['category_name'] }}</option>
+                        <!-- Then iterate through every key in the current item dictionary -->
+                    {% endfor %}
+                {% endif %}
+            </select>
+
+		<label for="account">Amount:</label>
+            <input
+		    type="number"
+                name="amount" id="amount"
+                size="20" maxlength="20"
+                placeholder="-159.90" />
 
 	<button type="submit" name="Add_Transaction" id="Add_Transaction" value="Add Transaction">Add Transaction</button>
 	</fieldset>
