@@ -228,7 +228,6 @@ def transactions():
             # redirect back to transactions page
             return redirect("/transactions")
 
-
 # Listener
 # change the port number if deploying on the flip servers
 # app is displaying on http://flip2.engr.oregonstate.edu:50121 when on the VPN and using above credentials  
