@@ -164,6 +164,71 @@ def edit_household_members(member_id):
             # redirect back to members page after we execute the update query
             return redirect("/household-members")
 
+
+# route for transactions page
+@app.route("/transactions", methods=["POST", "GET"])
+def transactions():
+
+    # Grab transactions data so we send it to our template to display
+    if request.method == "GET":
+        data_query = "SELECT transaction_id AS ID, date AS Date, description AS Description, \
+                        Accounts.account_name AS 'Account Name', Budget_categories.category_name AS Category, \
+                        CONCAT('$ ', FORMAT(amount, 2)) AS Amount \
+                     FROM Transactions \
+                 INNER JOIN Accounts ON Transactions.account_id=Accounts.account_id \
+                 INNER JOIN Budget_categories ON Transactions.category_id = Budget_categories.category_id \
+                 ORDER BY date DESC;"
+        cur = mysql.connection.cursor()
+        cur.execute(data_query)
+        data = cur.fetchall()
+
+        account_query = "SELECT account_id, account_name \
+                      FROM Accounts \
+                  ORDER BY account_name;"
+        cur = mysql.connection.cursor()
+        cur.execute(account_query)
+        account_data = cur.fetchall()
+
+        category_query = "SELECT category_id, category_name \
+                      FROM Budget_categories \
+                  ORDER BY category_name;"
+        cur = mysql.connection.cursor()
+        cur.execute(category_query)
+        category_data = cur.fetchall()
+
+        return render_template("transactions.j2", data=data, account_data=account_data, category_data=category_data)
+
+    # insert a transaction into the Transactions entity
+    if request.method == "POST":
+        # fire off if user presses the Add Transaction button
+        if request.form.get("Add_Transaction"):
+            # grab user form inputs
+            transaction_date_input = request.form["date"]
+            transaction_description_input = request.form["description"]
+            transaction_account_input = request.form["account"]
+            transaction_category_input = request.form["category"]
+            transaction_amount_input = request.form["amount"]
+
+            # account for null inputs
+            if transaction_account_input == "Null":
+                return redirect("/transactions")
+
+            elif transaction_category_input == "Null":
+                return redirect("/transactions")
+
+            # no null inputs
+            else:
+                query = "INSERT INTO Transactions (date, description, account_id, category_id, amount) \
+                             VALUES (%s, %s, %s, %s, %s);"
+                cur = mysql.connection.cursor()
+                cur.execute(query, (transaction_date_input, transaction_description_input, transaction_account_input,
+                                    transaction_category_input, transaction_amount_input))
+                mysql.connection.commit()
+
+            # redirect back to transactions page
+            return redirect("/transactions")
+
+
 # Listener
 # change the port number if deploying on the flip servers
 # app is displaying on http://flip2.engr.oregonstate.edu:50121 when on the VPN and using above credentials  
