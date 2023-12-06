@@ -271,6 +271,21 @@ def categories():
 
             # redirect back to accounts page
             return redirect("/categories")
+
+
+# route for household-member-accounts page
+@app.route("/household-members-accounts", methods=["POST", "GET"])
+def member_accounts():
+
+    # Grab transactions data so we send it to our template to display
+    if request.method == "GET":
+        data_query = "SELECT * FROM Household_members_accounts;"
+        cur = mysql.connection.cursor()
+        cur.execute(data_query)
+        data = cur.fetchall()
+
+        return render_template("household-members-accounts.j2", data=data)
+
         
 # Listener
 # change the port number if deploying on the flip servers
