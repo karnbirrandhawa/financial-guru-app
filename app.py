@@ -279,7 +279,13 @@ def member_accounts():
 
     # Grab transactions data so we send it to our template to display
     if request.method == "GET":
-        data_query = "SELECT * FROM Household_members_accounts;"
+        data_query = ("SELECT household_members_accounts AS ID, \
+                            Accounts.account_name AS Account, \
+                            Household_members.member_name AS Member \
+                        FROM Household_members_accounts \
+                        INNER JOIN Accounts ON Household_members_accounts.account_id=Accounts.account_id \
+                        INNER JOIN Household_members ON \
+                            Household_members_accounts.member_id = Household_members.member_id;")
         cur = mysql.connection.cursor()
         cur.execute(data_query)
         data = cur.fetchall()
