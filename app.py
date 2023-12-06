@@ -228,7 +228,50 @@ def transactions():
             # redirect back to transactions page
             return redirect("/transactions")
 
+# route for categories page
+@app.route("/categories", methods=["POST", "GET"])
+def categories():
 
+    # Grab category data so we send it to our template to display
+    if request.method == "GET":
+
+        query = "SELECT category_id AS id, \
+                        category_name AS 'Category Name', \
+                        category_budget AS 'Category Number' \
+                    FROM Budget_categories"
+
+        cur = mysql.connection.cursor()
+        cur.execute(query)
+        data = cur.fetchall()
+
+        return render_template("categories.j2", data=data)
+
+    # insert an account into the Budget_categories entity
+    if request.method == "POST":
+        # fire off if user presses the Add Category button
+        if request.form.get("Add_Category"):
+            # grab user form inputs
+            category_name_input = request.form["name"]
+            category_budget_input = request.form["number"]
+
+            # account for null account number
+            if category_budget_input == "":
+                query = "INSERT INTO Budget_categories (category_name) VALUES (%s)"
+                cur = mysql.connection.cursor()
+                cur.execute(query, (category_name_input,))
+                mysql.connection.commit()
+
+            # no null inputs
+            else:
+                query = "INSERT INTO Budget_categories (category_name, category_budget) \
+                            VALUES (%s, %s)"
+                cur = mysql.connection.cursor()
+                cur.execute(query, (category_name_input, category_budget_input))
+                mysql.connection.commit()
+
+            # redirect back to accounts page
+            return redirect("/categories")
+        
 # Listener
 # change the port number if deploying on the flip servers
 # app is displaying on http://flip2.engr.oregonstate.edu:50121 when on the VPN and using above credentials  
