@@ -2,7 +2,7 @@
  -- ----------- TRANSACTIONS PAGE -------------- -- 
 
  -- get transactions to display on transactions.html
-SELECT transaction_id AS ID, date AS Date, description AS Description,
+SELECT date AS Date, description AS Description,
             Accounts.account_name AS 'Account Name', Budget_categories.category_name AS Category,
             CONCAT('$ ', FORMAT(amount, 2)) AS Amount
         FROM Transactions
@@ -94,13 +94,11 @@ SET member_name = :member_name_update
  -- ----------- HOUSEHOLD_MEMBERS_ACCOUNTS INTERSECTION TABLE QUERIES (M:M RELATIONSHIP) -------------- --
 
  -- get household members accounts intersection table to display
-SELECT household_members_accounts AS ID, \
-        Accounts.account_name AS Account, \
-        Household_members.member_name AS Member \
-    FROM Household_members_accounts \
+SELECT Accounts.account_name AS Account, Household_members.member_name AS Member \
+        FROM Household_members_accounts \
     INNER JOIN Accounts ON Household_members_accounts.account_id=Accounts.account_id \
     INNER JOIN Household_members ON \
-        Household_members_accounts.member_id = Household_members.member_id;
+        Household_members_accounts.member_id = Household_members.member_id
 ;
 
  -- add to household members accounts intersection table
