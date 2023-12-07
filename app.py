@@ -228,6 +228,7 @@ def transactions():
             # redirect back to transactions page
             return redirect("/transactions")
 
+
 # route for categories page
 @app.route("/categories", methods=["POST", "GET"])
 def categories():

@@ -4,7 +4,7 @@
 	<meta charset='utf-8'>
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
     <meta name='robots' content='noindex,noarchive,nofollow'>
-	<title>Accounts</title>
+	<title>Household Members' Accounts</title>
 	<meta name='viewport' content='width=device-width, initial-scale=1'>
     <link href="main.css" rel="stylesheet" type="text/css" />
 </head>
@@ -22,24 +22,24 @@
 </nav>
 <main>
 <section>
-	<h2>Accounts</h2>
+	<h2>Household Members' Accounts</h2>
 		<p>Here you can view, add, or delete accounts. </p>
+		<div id="browse">
 			<fieldset>
-			<div id="browse">
-			<legend>View Accounts</legend>
+			<legend>View Household Members' Accounts</legend>
 			<table>
-			<!-- Access data tuple passed from app.py --> 
+			<!-- Access data tuple passed from app.py -->
 			{% if data %}
 				<thead>
 					<tr>
 						<!-- Iterate through each key in the first entry to get the column name -->
 						{% for key in data[0].keys() %}
-						
+
 						<!-- Create a <th> tag with the key inside of it, this will be our header row -->
 						<th scope="col" data-field="{{ key }}" data-filter-control="input">{{ key }}</th>
-					
+
 						<!-- End of this for loop -->
-						{% endfor %} 
+						{% endfor %}
 					</tr>
 
 				<tbody>
@@ -49,63 +49,53 @@
 						{% for key in item.keys() %}
 
 						<!-- Create a <td> element with the value of that key in it -->
-						<td> {{item[key]}} </td> 
+						<td> {{item[key]}} </td>
 						{% endfor %}
 
-					</tr> 
-					{% endfor %} 
-			{% endif %} 
-			</table>   
-		<p>&nbsp;</p>
+					</tr>
+					{% endfor %}
+			{% endif %}
+			</table>
+		    <p>&nbsp;</p>
+	        </fieldset>
 		</div>	<!-- browse -->
-	</fieldset>
 
 	<div id="insert">
-	<form id="insertAccount" action="/accounts" method="POST">
+	<form id="Add_Assignment" action="/household-members-accounts" method="POST">
 	<fieldset>
-		<legend>Add Account</legend>
-		<label for="name" class="required">Account Name:</label>
-		<input 
-		type="text" 
-			name="name" id="name" 
-			size="30" maxlength="100" 
-			required 
-			placeholder="Jameela's Checking"  />
+		<legend>Add Member to Account</legend>
+		<label for="account">Account:</label>
+            <select name="account" id="account" required>
+                <option value="Null"></option>
+                {% if account_data %}
+                    {% for item in account_data %}
+                        <option value={{ item['account_id'] }}>{{ item['account_name'] }}</option>
+                        <!-- Then iterate through every key in the current item dictionary -->
+                    {% endfor %}
+                {% endif %}
+            </select>
 
-		<label for="number">Account Number:</label>
-		<input 
-		type="text" 
-			name="number" id="number" 
-			size="30" maxlength="30" 
-			placeholder="00000000000" />
-	<button type="submit" name="Add_Account" id="Add_Account" value="Add Account">Add Account</button>
+		<label for="member">Member:</label>
+            <select name="member" id="member" required>
+                <option value="Null"></option>
+                {% if member_data %}
+                    {% for item in member_data %}
+                        <option value={{ item['member_id'] }}>{{ item['member_name'] }}</option>
+                        <!-- Then iterate through every key in the current item dictionary -->
+                    {% endfor %}
+                {% endif %}
+            </select>
+
+	<button type="submit" name="Add_Assignment" id="Add_Assignment" value="Assign">Assign</button>
 	</fieldset>
 	</form>
 	</div>  <!-- insert -->
 
-	<div id="delete">
-	<form id="deleteAccount" action="/delete_account" method="POST">
-		<fieldset>
-			<legend>Delete Account</legend>
-			<label for="account">Account:</label>
-				<select name="account" id="account">
-					<option value="Null"></option>
-					 {% if data %}
-						{% for item in data %}
-							<option value={{ item['id'] }}>{{ item['Account Name'] }}</option>
-							<!-- Then iterate through every key in the current item dictionary -->
-						{% endfor %} 
-					{% endif %} 
-				</select>
-		<button type="submit" name="Delete_Account" id="Delete_Account" value="Delete Account">Delete Account</button>
-		</fieldset>
-	</form>
-	</div>
 </section>
 </main>
 <footer>
 &copy; Team Financial Gurus
-</footer>    
+</footer>
 
 </body>
 </html>
