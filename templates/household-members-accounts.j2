@@ -59,6 +59,39 @@
 		    <p>&nbsp;</p>
 	        </fieldset>
 		</div>	<!-- browse -->
+
+
+	<div id="insert">
+	<form id="insertMemberAccount" action="/household-members-accounts" method="POST">
+	<fieldset>
+		<legend>Add Member to Account</legend>
+		<label for="account">Account:</label>
+            <select name="account" id="account" required>
+                <option value="Null"></option>
+                {% if account_data %}
+                    {% for item in account_data %}
+                        <option value={{ item['account_id'] }}>{{ item['account_name'] }}</option>
+                        <!-- Then iterate through every key in the current item dictionary -->
+                    {% endfor %}
+                {% endif %}
+            </select>
+
+		<label for="account">Member:</label>
+            <select name="member" id="member" required>
+                <option value="Null"></option>
+                {% if member_data %}
+                    {% for item in category_data %}
+                        <option value={{ item['member_id'] }}>{{ item['member_name'] }}</option>
+                        <!-- Then iterate through every key in the current item dictionary -->
+                    {% endfor %}
+                {% endif %}
+            </select>
+
+	<button type="submit" name="Add_Assignment" id="Add_Assignment" value="Assign">Assign</button>
+	</fieldset>
+	</form>
+	</div>  <!-- insert -->
+
 </section>
 </main>
 <footer>
