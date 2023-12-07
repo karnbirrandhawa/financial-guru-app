@@ -171,8 +171,8 @@ def transactions():
 
     # Grab transactions data so we send it to our template to display
     if request.method == "GET":
-        data_query = "SELECT transaction_id AS ID, date AS Date, description AS Description, \
-                        Accounts.account_name AS 'Account Name', Budget_categories.category_name AS Category, \
+        data_query = "SELECT date AS Date, description AS Description, Accounts.account_name AS 'Account Name', \
+                        Budget_categories.category_name AS Category, \
                         CONCAT('$ ', FORMAT(amount, 2)) AS Amount \
                      FROM Transactions \
                  INNER JOIN Accounts ON Transactions.account_id=Accounts.account_id \
@@ -271,10 +271,68 @@ def categories():
 
             # redirect back to accounts page
             return redirect("/categories")
+
+
+# route for household-member-accounts page
+@app.route("/household-members-accounts", methods=["POST", "GET"])
+def member_accounts():
+
+    # Grab household-members-accounts data so we send it to our template to display
+    if request.method == "GET":
+        data_query = ("SELECT Accounts.account_name AS Account, Household_members.member_name AS Member \
+                            FROM Household_members_accounts \
+                        INNER JOIN Accounts ON Household_members_accounts.account_id=Accounts.account_id \
+                        INNER JOIN Household_members ON \
+                            Household_members_accounts.member_id = Household_members.member_id;")
+        cur = mysql.connection.cursor()
+        cur.execute(data_query)
+        data = cur.fetchall()
+
+        account_query = "SELECT account_id, account_name \
+                            FROM Accounts \
+                         ORDER BY account_name;"
+        cur = mysql.connection.cursor()
+        cur.execute(account_query)
+        account_data = cur.fetchall()
+
+        member_query = "SELECT member_id, member_name \
+                            FROM Household_members \
+                         ORDER BY member_name;"
+        cur = mysql.connection.cursor()
+        cur.execute(member_query)
+        member_data = cur.fetchall()
+
+        return render_template(
+            "household-members-accounts.j2", data=data, account_data=account_data, member_data=member_data)
+
+    # insert a household-members-accounts row
+    if request.method == "POST":
+        # fire off if user presses the Assign button
+        if request.form.get("Add_Assignment"):
+            # grab user form inputs
+            account_input = request.form["account"]
+            household_member_input = request.form["member"]
+
+            # account for null inputs
+            if account_input == "Null":
+                return redirect("/household-members-accounts")
+
+            elif household_member_input == "Null":
+                return redirect("/household-members-accounts")
+
+            # no null inputs
+            else:
+                query = "INSERT INTO Household_members_accounts (account_id, member_id) \
+                            VALUES (%s, %s);"
+                cur = mysql.connection.cursor()
+                cur.execute(query, (account_input, household_member_input))
+                mysql.connection.commit()
+
+            # redirect back to transactions page
+            return redirect("/household-members-accounts")
         
 # Listener
 # change the port number if deploying on the flip servers
 # app is displaying on http://flip2.engr.oregonstate.edu:50121 when on the VPN and using above credentials  
 if __name__ == "__main__":
     app.run(port=50121, debug=True)
- 
