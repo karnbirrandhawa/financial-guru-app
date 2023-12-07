@@ -272,7 +272,18 @@ def categories():
 
             # redirect back to accounts page
             return redirect("/categories")
+        
+@app.route("/delete_category", methods=["POST"])
+def delete_category():
 
+    if request.form.get("Delete_Category"):
+        category_id_input = request.form["category"]
+        query = "DELETE FROM Budget_categories WHERE category_id = %s;"
+        cur = mysql.connection.cursor()
+        cur.execute(query, (category_id_input,))
+        mysql.connection.commit()
+
+    return redirect("/categories")
 
 # route for household-member-accounts page
 @app.route("/household-members-accounts", methods=["POST", "GET"])
