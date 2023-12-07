@@ -60,9 +60,8 @@
 	        </fieldset>
 		</div>	<!-- browse -->
 
-
 	<div id="insert">
-	<form id="insertMemberAccount" action="/household-members-accounts" method="POST">
+	<form id="Add_Assignment" action="/household-members-accounts" method="POST">
 	<fieldset>
 		<legend>Add Member to Account</legend>
 		<label for="account">Account:</label>
@@ -76,11 +75,11 @@
                 {% endif %}
             </select>
 
-		<label for="account">Member:</label>
+		<label for="member">Member:</label>
             <select name="member" id="member" required>
                 <option value="Null"></option>
                 {% if member_data %}
-                    {% for item in category_data %}
+                    {% for item in member_data %}
                         <option value={{ item['member_id'] }}>{{ item['member_name'] }}</option>
                         <!-- Then iterate through every key in the current item dictionary -->
                     {% endfor %}

@@ -94,12 +94,17 @@ SET member_name = :member_name_update
  -- ----------- HOUSEHOLD_MEMBERS_ACCOUNTS INTERSECTION TABLE QUERIES (M:M RELATIONSHIP) -------------- --
 
  -- get household members accounts intersection table to display
-SELECT Accounts.account_name AS Account, Household_members.member_name AS Member \
-        FROM Household_members_accounts \
-    INNER JOIN Accounts ON Household_members_accounts.account_id=Accounts.account_id \
-    INNER JOIN Household_members ON \
+SELECT Accounts.account_name AS Account, Household_members.member_name AS Member
+        FROM Household_members_accounts
+    INNER JOIN Accounts ON Household_members_accounts.account_id=Accounts.account_id
+    INNER JOIN Household_members ON
         Household_members_accounts.member_id = Household_members.member_id
 ;
+
+ -- get accounts to populate dropdown
+ SELECT account_id, account_name
+        FROM Accounts
+     ORDER BY account_name;
 
  -- add to household members accounts intersection table
 INSERT INTO Household_members_accounts (account_id, member_id)
