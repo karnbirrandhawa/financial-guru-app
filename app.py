@@ -342,6 +342,29 @@ def member_accounts():
 
             # redirect back to transactions page
             return redirect("/household-members-accounts")
+
+@app.route("/delete_member_account", methods=["POST"])
+def delete_member_account():
+
+         if request.form.get("Delete_Member_Account"):
+        
+            account_input = request.form["account"]
+            household_member_input = request.form["member"]
+
+            if account_input == "Null":
+                return redirect("/household-members-accounts")
+
+            elif household_member_input == "Null":
+                return redirect("/household-members-accounts")
+        
+            else:
+                query = "DELETE FROM Household_members_accounts WHERE (account_id, member_id) \
+                                    VALUES (%s, %s);"
+                cur = mysql.connection.cursor()
+                cur.execute(query, (account_input, household_member_input))
+                mysql.connection.commit()
+
+            return redirect("/household-members-accounts")
         
 # Listener
 # change the port number if deploying on the flip servers
