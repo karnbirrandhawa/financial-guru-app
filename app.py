@@ -272,7 +272,18 @@ def categories():
 
             # redirect back to accounts page
             return redirect("/categories")
+        
+@app.route("/delete_category", methods=["POST"])
+def delete_category():
 
+    if request.form.get("Delete_Category"):
+        category_id_input = request.form["category"]
+        query = "DELETE FROM Budget_categories WHERE category_id = %s;"
+        cur = mysql.connection.cursor()
+        cur.execute(query, (category_id_input,))
+        mysql.connection.commit()
+
+    return redirect("/categories")
 
 # route for household-member-accounts page
 @app.route("/household-members-accounts", methods=["POST", "GET"])
@@ -331,10 +342,32 @@ def member_accounts():
 
             # redirect back to transactions page
             return redirect("/household-members-accounts")
+
+@app.route("/delete_member_account", methods=["POST"])
+def delete_member_account():
+
+         if request.form.get("Delete_Member_Account"):
+        
+            account_input = request.form["account"]
+            household_member_input = request.form["member"]
+
+            if account_input == "Null":
+                return redirect("/household-members-accounts")
+
+            elif household_member_input == "Null":
+                return redirect("/household-members-accounts")
+        
+            else:
+                query = "DELETE FROM Household_members_accounts WHERE (account_id, member_id) \
+                                    VALUES (%s, %s);"
+                cur = mysql.connection.cursor()
+                cur.execute(query, (account_input, household_member_input))
+                mysql.connection.commit()
+
+            return redirect("/household-members-accounts")
         
 # Listener
 # change the port number if deploying on the flip servers
 # app is displaying on http://flip2.engr.oregonstate.edu:50121 when on the VPN and using above credentials  
 if __name__ == "__main__":
     app.run(port=50121, debug=True)
- 

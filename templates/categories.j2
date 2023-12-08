@@ -23,7 +23,7 @@
 <main>
 <section>
 	<h2>Categories</h2>
-		<p>Here you can view and/or add categories. </p>
+		<p>Here you can view, add, and delete categories. </p>
 			<fieldset>
 			<div id="browse">
 			<legend>View Categories</legend>
@@ -82,6 +82,25 @@
 	</fieldset>
 	</form>
 	</div>  <!-- insert -->
+
+	<div id="delete">
+	<form id="deleteCategory" action="/delete_category" method="POST">
+		<fieldset>
+			<legend>Delete Category</legend>
+			<label for="category">Category:</label>
+				<select name="category" id="category">
+					<option value="Null"></option>
+					 {% if data %}
+						{% for item in data %}
+							<option value={{ item['id'] }}>{{ item['Category Name'] }}</option>
+							<!-- Then iterate through every key in the current item dictionary -->
+						{% endfor %} 
+					{% endif %} 
+				</select>
+		<button type="submit" name="Delete_Category" id="Delete_Category" value="Delete Category">Delete Category</button>
+		</fieldset>
+	</form>
+	</div>
 
 </section>
 </main>
