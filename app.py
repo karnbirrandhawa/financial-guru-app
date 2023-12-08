@@ -350,15 +350,14 @@ def edit_member_account():
         account_member_id_input = request.form["account_member"]
         account_input = request.form["account"]
         member_input = request.form["member"]
-        query = "UPDATE Household_members_accounts \
-                    SET account_name = %s \
-                    SET member_name = %s \
-                    WHERE household_members_accounts = %s"
+        query = ("UPDATE Household_members_accounts \
+                    SET account_id = %s, member_id = %s \
+                    WHERE household_members_accounts = %s;")
         cur = mysql.connection.cursor()
-        cur.execute(query, (account_member_id_input,))
+        cur.execute(query, (account_input, member_input, account_member_id_input,))
         mysql.connection.commit()
 
-    return redirect("/accounts")
+    return redirect("/household-member-account")
 
 
 @app.route("/delete_member_account", methods=["POST"])
