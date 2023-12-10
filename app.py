@@ -1,3 +1,5 @@
+# adapted from 340 flask-starter-app
+
 from flask import Flask, render_template, json, redirect
 from flask_mysqldb import MySQL
 from flask import request
@@ -33,11 +35,16 @@ mysql = MySQL(app)
 def home():
     return redirect("/accounts")
 
+# Routes
+@app.route("/error")
+def error():
+    return render_template("error.j2")
+
 
 # route for accounts page
 @app.route("/accounts", methods=["POST", "GET"])
 def accounts():
-    # Grab accounts data so we send it to our template to display
+    # Grab accounts data to send to template to display
     if request.method == "GET":
         query = "SELECT account_id AS id, \
                         account_name AS 'Account Name', \
@@ -52,9 +59,8 @@ def accounts():
 
     # insert an account into the Accounts entity
     if request.method == "POST":
-        # fire off if user presses the Add Account button
+        # action when user presses the Add Account button
         if request.form.get("Add_Account"):
-            # grab user form inputs
             account_name_input = request.form["name"]
             account_number_input = request.form["number"]
 
@@ -195,10 +201,10 @@ def transactions():
 
             # account for null inputs
             if transaction_account_input == "Null":
-                return redirect("/transactions")
+                return redirect("/error")
 
             elif transaction_category_input == "Null":
-                return redirect("/transactions")
+                return redirect("/error")
 
             # no null inputs
             else:
@@ -317,10 +323,10 @@ def member_accounts():
 
             # account for null inputs
             if account_input == "Null":
-                return redirect("/household-members-accounts")
+                return redirect("/error")
 
             elif household_member_input == "Null":
-                return redirect("/household-members-accounts")
+                return redirect("/error")
 
             # no null inputs
             else:
@@ -359,10 +365,10 @@ def delete_member_account():
         household_member_input = request.form["member"]
 
         if account_input == "Null":
-            return redirect("/household-members-accounts")
+            return redirect("/error")
 
         elif household_member_input == "Null":
-            return redirect("/household-members-accounts")
+            return redirect("/error")
 
         else:
             query = "DELETE FROM Household_members_accounts WHERE (account_id, member_id) \

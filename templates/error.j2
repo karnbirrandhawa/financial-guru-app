@@ -1,0 +1,35 @@
+<html>
+<!-- Adapted from CS340 edit_people.j2 -->
+<head>
+	<meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <meta name='robots' content='noindex,noarchive,nofollow'>
+	<title>Error</title>
+	<meta name='viewport' content='width=device-width, initial-scale=1'>
+	<!-- Source: https://pythonhow.com/python-tutorial/flask/Adding-CSS-styling-to-your-website/ -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+</head>
+
+<body>
+<header>
+	<h1> Financial Guru </h1>
+</header>
+<nav>
+	<a href="transactions">Transactions</a>
+	<a href="accounts">Accounts</a>
+	<a href="categories">Categories</a>
+	<a href="household-members">Household Members</a>
+	<a href="household-members-accounts">Household Member Accounts</a>
+</nav>
+<main>
+<section>
+	<h2>Error!</h2>
+		<p>You did something wrong! You probably left something blank. Click a link above to go back to where you were.</p>
+</section>
+</main>
+<footer>
+&copy; Team Financial Gurus
+</footer>
+
+</body>
+</html>
