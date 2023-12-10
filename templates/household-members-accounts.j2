@@ -138,27 +138,15 @@
 	<form id="deleteMemberAccount" action="/delete_member_account" method="POST">
 	<fieldset>
 		<legend>Remove Member from Account</legend>
-		<label for="Account">Account:</label>
-			<select name="account" id="account">
-				<option value="Null"></option>
-					{% if data %}
-					{% for item in data %}
-						<option value={{ item['account_id'] }}>{{ item['account_name'] }}</option>
-						<!-- Then iterate through every key in the current item dictionary -->
-					{% endfor %} 
-				{% endif %} 
-			</select>
-
-		<label for="member">Member:</label>
-			<select name="member" id="member" required>
-				<option value="Null"></option>
-				{% if member_data %}
-					{% for item in member_data %}
-						<option value={{ item['member_id'] }}>{{ item['member_name'] }}</option>
-						<!-- Then iterate through every key in the current item dictionary -->
-					{% endfor %}
-				{% endif %}
-		</select>
+            <select name="account_member" id="account_member">
+                <option value="Null"></option>
+                 {% if member_account_data %}
+                    {% for item in member_account_data %}
+                        <option value={{ item['household_members_accounts'] }}>{{ item['household_members_accounts'] }}</option>
+                        <!-- Then iterate through every key in the current item dictionary -->
+                    {% endfor %}
+                {% endif %}
+            </select>
 
 	<button type="submit" name="Delete_Member_Account" id="Delete_Member_Account" value="Delete Member">Remove Member</button>
 	</fieldset>

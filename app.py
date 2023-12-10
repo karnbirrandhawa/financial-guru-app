@@ -79,7 +79,6 @@ def accounts():
                 cur.execute(query, (account_name_input, account_number_input))
                 mysql.connection.commit()
 
-            # redirect back to accounts page
             return redirect("/accounts")
 
 
@@ -159,7 +158,7 @@ def edit_household_members():
 # route for transactions page
 @app.route("/transactions", methods=["POST", "GET"])
 def transactions():
-    # Grab transactions data so we send it to our template to display
+    # Grab transactions data to display
     if request.method == "GET":
         data_query = "SELECT date AS Date, description AS Description, Accounts.account_name AS 'Account Name', \
                         Budget_categories.category_name AS Category, \
@@ -172,6 +171,7 @@ def transactions():
         cur.execute(data_query)
         data = cur.fetchall()
 
+        # populate account dropdown
         account_query = "SELECT account_id, account_name \
                       FROM Accounts \
                   ORDER BY account_name;"
@@ -179,6 +179,7 @@ def transactions():
         cur.execute(account_query)
         account_data = cur.fetchall()
 
+        # populate categories dropdown
         category_query = "SELECT category_id, category_name \
                       FROM Budget_categories \
                   ORDER BY category_name;"
@@ -190,19 +191,19 @@ def transactions():
 
     # insert a transaction into the Transactions entity
     if request.method == "POST":
-        # fire off if user presses the Add Transaction button
+        # action when the Add Transaction button is pressed
         if request.form.get("Add_Transaction"):
-            # grab user form inputs
             transaction_date_input = request.form["date"]
             transaction_description_input = request.form["description"]
             transaction_account_input = request.form["account"]
             transaction_category_input = request.form["category"]
             transaction_amount_input = request.form["amount"]
 
-            # account for null inputs
+            # account for null account input
             if transaction_account_input == "Null":
                 return redirect("/error")
 
+            # account for null category input
             elif transaction_category_input == "Null":
                 return redirect("/error")
 
@@ -277,7 +278,7 @@ def delete_category():
 # route for household-member-accounts page
 @app.route("/household-members-accounts", methods=["POST", "GET"])
 def member_accounts():
-    # Grab household-members-accounts data so we send it to our template to display
+    # Grab household-members-accounts data to display
     if request.method == "GET":
         data_query = ("SELECT Household_members_accounts.household_members_accounts as ID, \
                       Accounts.account_name AS Account, Household_members.member_name AS Member \
@@ -289,6 +290,7 @@ def member_accounts():
         cur.execute(data_query)
         data = cur.fetchall()
 
+        # populate account dropdown
         account_query = "SELECT account_id, account_name \
                             FROM Accounts \
                          ORDER BY account_name;"
@@ -296,6 +298,7 @@ def member_accounts():
         cur.execute(account_query)
         account_data = cur.fetchall()
 
+        # populate member dropdown
         member_query = "SELECT member_id, member_name \
                             FROM Household_members \
                          ORDER BY member_name;"
@@ -321,10 +324,11 @@ def member_accounts():
             account_input = request.form["account"]
             household_member_input = request.form["member"]
 
-            # account for null inputs
+            # account for null account inputs
             if account_input == "Null":
                 return redirect("/error")
 
+            # account for null member inputs
             elif household_member_input == "Null":
                 return redirect("/error")
 
@@ -347,6 +351,10 @@ def edit_member_account():
         account_member_id_input = request.form["account_member"]
         account_input = request.form["account"]
         member_input = request.form["member"]
+
+        if account_member_id_input == "Null" or account_input == "Null" or member_input == "Null":
+            return redirect("/error")
+
         query = ("UPDATE Household_members_accounts \
                     SET account_id = %s, member_id = %s \
                     WHERE household_members_accounts = %s;")
@@ -361,21 +369,17 @@ def edit_member_account():
 def delete_member_account():
     if request.form.get("Delete_Member_Account"):
 
-        account_input = request.form["account"]
-        household_member_input = request.form["member"]
+        account_member_input = request.form["account_member"]
 
-        if account_input == "Null":
+        # handle null id inputs
+        if account_member_input == "Null":
             return redirect("/error")
 
-        elif household_member_input == "Null":
-            return redirect("/error")
-
-        else:
-            query = "DELETE FROM Household_members_accounts WHERE (account_id, member_id) \
-                                    VALUES (%s, %s);"
-            cur = mysql.connection.cursor()
-            cur.execute(query, (account_input, household_member_input))
-            mysql.connection.commit()
+        query = "DELETE FROM Household_members_accounts \
+                    WHERE Household_members_accounts = %s;"
+        cur = mysql.connection.cursor()
+        cur.execute(query, account_member_input)
+        mysql.connection.commit()
 
         return redirect("/household-members-accounts")
 
