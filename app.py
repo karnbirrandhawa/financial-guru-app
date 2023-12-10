@@ -130,33 +130,24 @@ def members():
             return redirect("/household-members")
 
 
-@app.route("/edit-household-members/<int:member_id>", methods=["POST", "GET"])
-def edit_household_members(member_id):
-    if request.method == "GET":
-        # mySQL query to grab the info of the member with our passed id
-        query = "SELECT * FROM Household_members WHERE member_id = %s" % (member_id)
+@app.route("/edit-household-members/", methods=["POST"])
+def edit_household_members():
+
+    # fire off if user clicks the 'Update Member' button
+    if request.form.get("Update_Member"):
+        # grab user form inputs
+        member_id = request.form["member_id"]
+        member_name = request.form["update_name"]
+
+        query = "UPDATE Household_members \
+                    SET member_name = %s \
+                    WHERE member_id = %s"
         cur = mysql.connection.cursor()
-        cur.execute(query)
-        data = cur.fetchall()
+        cur.execute(query, (member_name, member_id))
+        mysql.connection.commit()
 
-        return render_template("edit-household-members.j2", data=data)
-
-    if request.method == "POST":
-        # fire off if user clicks the 'Update Member' button
-        if request.form.get("Update_Member"):
-            # grab user form inputs
-            member_id = request.form["member_id"]
-            member_name = request.form["member_name"]
-
-            query = "UPDATE Household_members \
-                        SET member_name = %s \
-                        WHERE member_id = %s"
-            cur = mysql.connection.cursor()
-            cur.execute(query, (member_name, member_id))
-            mysql.connection.commit()
-
-            # redirect back to members page after we execute the update query
-            return redirect("/household-members")
+        # redirect back to members page after we execute the update query
+        return redirect("/household-members")
 
 
 # route for transactions page
@@ -357,7 +348,7 @@ def edit_member_account():
         cur.execute(query, (account_input, member_input, account_member_id_input,))
         mysql.connection.commit()
 
-    return redirect("/household-member-account")
+    return redirect("/household-members-accounts")
 
 
 @app.route("/delete_member_account", methods=["POST"])

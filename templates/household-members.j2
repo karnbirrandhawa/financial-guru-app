@@ -80,8 +80,8 @@
 	<form id="updateMember" action="/edit-household-members" method="POST">
 		<fieldset>
 			<legend>Update Member</legend>
-			<label for="member">Member:</label>
-				<select name="member" id="member">
+			<label for="member_id">Member:</label>
+				<select name="member_id" id="member_id">
 					<option value="Null"></option>
 					{% if data %}				
 						{% for item in data %}
@@ -90,6 +90,12 @@
 						{% endfor %} 
 					{% endif %} 
 				</select>
+			<input
+		    type="text"
+                name="update_name" id="update_name"
+                size="30" maxlength="250"
+                required
+			placeholder="Firstname Lastname"  />
 		<button type="submit" name="Update_Member" id="Update_Member" value="Update Member">Update Member</button>
 		</fieldset>
 	</form>
