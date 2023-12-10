@@ -220,7 +220,7 @@ def categories():
     if request.method == "GET":
         query = "SELECT category_id AS id, \
                         category_name AS 'Category Name', \
-                        category_budget AS 'Category Number' \
+                        CONCAT('$ ', FORMAT(category_budget, 2)) AS 'Category Amount' \
                     FROM Budget_categories"
 
         cur = mysql.connection.cursor()
