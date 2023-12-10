@@ -173,16 +173,16 @@ def transactions():
 
         # populate account dropdown
         account_query = "SELECT account_id, account_name \
-                      FROM Accounts \
-                  ORDER BY account_name;"
+                            FROM Accounts \
+                            ORDER BY account_name;"
         cur = mysql.connection.cursor()
         cur.execute(account_query)
         account_data = cur.fetchall()
 
         # populate categories dropdown
         category_query = "SELECT category_id, category_name \
-                      FROM Budget_categories \
-                  ORDER BY category_name;"
+                            FROM Budget_categories \
+                            ORDER BY category_name;"
         cur = mysql.connection.cursor()
         cur.execute(category_query)
         category_data = cur.fetchall()
@@ -227,7 +227,7 @@ def categories():
     if request.method == "GET":
         query = "SELECT category_id AS id, \
                         category_name AS 'Category Name', \
-                        CONCAT('$ ', FORMAT(category_budget, 2)) AS 'Category Amount' \
+                        CONCAT('$ ', FORMAT(category_budget, 2)) AS 'Budget Amount' \
                     FROM Budget_categories"
 
         cur = mysql.connection.cursor()
@@ -318,9 +318,8 @@ def member_accounts():
 
     # insert a household-members-accounts row
     if request.method == "POST":
-        # fire off if user presses the Assign button
+        # if user presses the Assign button
         if request.form.get("Add_Assignment"):
-            # grab user form inputs
             account_input = request.form["account"]
             household_member_input = request.form["member"]
 
@@ -378,7 +377,7 @@ def delete_member_account():
         query = "DELETE FROM Household_members_accounts \
                     WHERE Household_members_accounts = %s;"
         cur = mysql.connection.cursor()
-        cur.execute(query, account_member_input)
+        cur.execute(query, (account_member_input,))
         mysql.connection.commit()
 
         return redirect("/household-members-accounts")

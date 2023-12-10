@@ -40,7 +40,11 @@ SELECT account_id AS id,
     FROM Accounts
 ;
 
- -- add accounts 
+ -- add account when null account number input
+  INSERT INTO Accounts (account_name)
+	VALUES (:account_name_input,)
+;
+ -- add account when no null inputs
  INSERT INTO Accounts (account_name, account_number)
 	VALUES (:account_name_input, :account_number_input)
 ;
@@ -50,7 +54,7 @@ SELECT account_id AS id,
     WHERE account_id = :account_input_from_dropdown)
 ;
 
- -- get accounts to populate dropdown in accounts.html
+ -- get accounts to populate dropdown in accounts
  SELECT account_id, account_name 
     FROM Accounts
     ORDER BY account_name
@@ -59,7 +63,7 @@ SELECT account_id AS id,
  
  -- ----------- BUDGET CATEGORIES PAGE -------------- -- 
 
- -- get budget categories to display on categories.html
+ -- get budget categories to display on categories
 SELECT * FROM Budget_categories
 ;
 
@@ -71,15 +75,16 @@ INSERT INTO Budget_categories (category_name, category_budget)
  -- ----------- HOUSEHOLD MEMBERS PAGE -------------- --
 
  -- get household members to display on household-members.html
-SELECT * FROM Household_members
-;
+SELECT member_id AS 'id', member_name AS 'Member Name'
+    FROM Household_members
+    ORDER BY member_id ASC
 
  -- add household members 
 INSERT INTO Household_members (member_name)
 	VALUES (:member_name_input)
 ;
 
- -- get household members to populate dropdown in household-members.html
+ -- get household members to populate dropdown
 SELECT member_id, member_name
     FROM Household_members
     ORDER BY member_id ASC
@@ -105,6 +110,11 @@ SELECT Accounts.account_name AS Account, Household_members.member_name AS Member
  SELECT account_id, account_name
         FROM Accounts
      ORDER BY account_name;
+
+ -- get members to populate dropdown
+SELECT member_id, member_name
+        FROM Household_members
+     ORDER BY member_name;
 
  -- add to household members accounts intersection table
 INSERT INTO Household_members_accounts (account_id, member_id)
