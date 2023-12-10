@@ -6,7 +6,9 @@
     <meta name='robots' content='noindex,noarchive,nofollow'>
 	<title>Household Members</title>
 	<meta name='viewport' content='width=device-width, initial-scale=1'>
-    <link href="main.css" rel="stylesheet" type="text/css" />
+    <!-- Source: https://pythonhow.com/python-tutorial/flask/Adding-CSS-styling-to-your-website/ -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+
 </head>
 
 <body>
@@ -18,15 +20,15 @@
 	<a href="accounts">Accounts</a>
 	<a href="categories">Categories</a>
 	<a href="household-members">Household Members</a>
-	<a href="household-members-accounts">Household Members Accounts</a>
+	<a href="household-members-accounts">Household Member Accounts</a>
 </nav>
 <main>
 <section>
 	<h2>Household Members</h2>
 		<p>Here you can view, add, and update information for household members, as well as their accounts. </p>
 			<fieldset>
-			<div id="browse">
 			<legend>View Household Members</legend>
+			<div id="browse">
 			<table>
 			<!-- Access data tuple passed from app.py --> 
 			{% if data %}
