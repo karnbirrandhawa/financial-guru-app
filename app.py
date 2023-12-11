@@ -7,26 +7,12 @@ from MySQLdb import IntegrityError
 
 app = Flask(__name__)
 
-# database connection
-# Template:
+
 # app.config["MYSQL_HOST"] = "classmysql.engr.oregonstate.edu"
-# app.config["MYSQL_USER"] = "cs340_randhawk"
-# app.config["MYSQL_PASSWORD"] = "1528"
-# app.config["MYSQL_DB"] = "cs340_randhawk"
+# app.config["MYSQL_USER"] = "********"
+# app.config["MYSQL_PASSWORD"] = "********"
+# app.config["MYSQL_DB"] = "********"
 # app.config["MYSQL_CURSORCLASS"] = "DictCursor"
-
-app.config["MYSQL_HOST"] = "classmysql.engr.oregonstate.edu"
-app.config["MYSQL_USER"] = "cs340_allmanlj"
-app.config["MYSQL_PASSWORD"] = "gNVb2MTHnklD"
-app.config["MYSQL_DB"] = "cs340_allmanlj"
-app.config["MYSQL_CURSORCLASS"] = "DictCursor"
-
-# # database connection info
-# app.config["MYSQL_HOST"] = config.MYSQL_HOST
-# app.config["MYSQL_USER"] = config.MYSQL_USER
-# app.config["MYSQL_PASSWORD"] = config.MYSQL_PASSWORD
-# app.config["MYSQL_DB"] = config.MYSQL_DB
-# app.config["MYSQL_CURSORCLASS"] = config.MYSQL_CURSORCLASS
 
 mysql = MySQL(app)
 
