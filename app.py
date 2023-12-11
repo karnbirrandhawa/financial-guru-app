@@ -3,6 +3,7 @@
 from flask import Flask, render_template, json, redirect
 from flask_mysqldb import MySQL
 from flask import request
+from MySQLdb import IntegrityError
 
 app = Flask(__name__)
 
@@ -34,6 +35,7 @@ mysql = MySQL(app)
 @app.route("/")
 def home():
     return redirect("/accounts")
+
 
 # Routes
 @app.route("/error")
@@ -67,19 +69,27 @@ def accounts():
             # account for null account number
             if account_number_input == "":
                 query = "INSERT INTO Accounts (account_name) VALUES (%s)"
-                cur = mysql.connection.cursor()
-                cur.execute(query, (account_name_input,))
+                try:
+                    cur = mysql.connection.cursor()
+                    cur.execute(query, (account_name_input,))
+                except IntegrityError:
+                    return redirect("/error")
+
                 mysql.connection.commit()
+                return redirect("/accounts")
 
             # no null inputs
             else:
                 query = "INSERT INTO Accounts (account_name, account_number) \
                             VALUES (%s, %s)"
-                cur = mysql.connection.cursor()
-                cur.execute(query, (account_name_input, account_number_input))
-                mysql.connection.commit()
+                try:
+                    cur = mysql.connection.cursor()
+                    cur.execute(query, (account_name_input, account_number_input))
+                except IntegrityError:
+                    return redirect("/error")
 
-            return redirect("/accounts")
+                mysql.connection.commit()
+                return redirect("/accounts")
 
 
 @app.route("/delete_account", methods=["POST"])
