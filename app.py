@@ -8,11 +8,11 @@ from MySQLdb import IntegrityError
 app = Flask(__name__)
 
 
-app.config["MYSQL_HOST"] = "classmysql.engr.oregonstate.edu"
-app.config["MYSQL_USER"] = "cs340_allmanlj"
-app.config["MYSQL_PASSWORD"] = "gNVb2MTHnklD"
-app.config["MYSQL_DB"] = "cs340_allmanlj"
-app.config["MYSQL_CURSORCLASS"] = "DictCursor"
+# app.config["MYSQL_HOST"] = ""
+# app.config["MYSQL_USER"] = ""
+# app.config["MYSQL_PASSWORD"] = ""
+# app.config["MYSQL_DB"] = ""
+# app.config["MYSQL_CURSORCLASS"] = ""
 
 mysql = MySQL(app)
 
